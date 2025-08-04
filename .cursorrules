@@ -45,8 +45,7 @@ export type SPItem = SharePointBaseItem & {
 
 ## SharePoint Specific
 - Always use HashRouter (never BrowserRouter)
-- Handle 5000 item view threshold
-- Use PnPjs, not raw REST API calls
+- Use PnPjs for SharePoint operations (not REST)
 - Respect SharePoint permissions model
 - Handle throttling gracefully
 
@@ -55,12 +54,14 @@ export type SPItem = SharePointBaseItem & {
 - No external Graph setup required
 - Handle 1-2 minute sync delays
 - Use workbook ID from file properties
+- ALL data storage in Excel Online workbooks
 
 ## BCM System Architecture
-- Excel Online for relational data storage
-- SharePoint Lists only for simple data (<1000 items)
+- Excel Online for ALL data storage
+- No SharePoint Lists (5000 item limits)
 - Zero-maintenance design philosophy
 - Business user data management focus
+- Unlimited relationships via Excel sheets
 
 ## Code Style
 - NO comments unless explicitly requested
@@ -105,7 +106,7 @@ gulp package-solution --ship
 ## Common Mistakes to Avoid
 - Using interface instead of type
 - Using BrowserRouter instead of HashRouter
-- Ignoring SharePoint's 5000 item limit
+- Using SharePoint Lists instead of Excel Online
 - Creating unnecessary complexity
 - Adding comments without being asked
-- Using SharePoint Lists for many-to-many relationships
+- Suggesting Power Automate for simple tasks

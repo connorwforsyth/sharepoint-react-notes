@@ -139,10 +139,10 @@ export type Capability = {
 
 ## Key Considerations
 
-- **Excel Online as primary data storage** for relational data (capabilities ↔ applications)
-- **SharePoint Lists for simple data** only (under 1,000 items, no complex relationships)
+- **Excel Online as the ONLY data storage** (no SharePoint Lists)
 - Use Microsoft Graph API (built into SPFx) for Excel integration
-- Use PnPjs for SharePoint-specific operations
 - Handle Excel Online sync delays (1-2 minutes for changes to appear)
 - Design for business user data management in Excel
+- Use PnPjs for SharePoint web part operations (not data storage)
 - Use CSS variables to integrate with SharePoint's theming system
+- Zero-maintenance architecture is the primary goal
