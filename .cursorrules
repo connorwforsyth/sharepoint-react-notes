@@ -1,0 +1,111 @@
+# SharePoint Framework (SPFx) Development Rules
+
+## Technology Stack
+- React functional components only (no class components)
+- TypeScript with strict mode enabled
+- Use `type` definitions instead of `interface`
+- Tailwind CSS for styling
+- shadcn/ui components
+- PnPjs for SharePoint operations
+- React Query for data fetching
+- Microsoft Graph API via MSGraphClientV3
+
+## Component Patterns
+```typescript
+// Always use this pattern for components
+export const ComponentName: React.FC<ComponentNameProps> = ({ prop1, prop2 }) => {
+  // Hooks at the top
+  const [state, setState] = useState<string>('');
+  
+  // Event handlers
+  const handleClick = useCallback(() => {
+    // handler logic
+  }, [dependencies]);
+  
+  // Return JSX
+  return <div>{/* component JSX */}</div>;
+};
+```
+
+## TypeScript Conventions
+```typescript
+// Use type, not interface
+export type MyType = {
+  field1: string;
+  field2?: number;
+  field3: 'option1' | 'option2';
+};
+
+// SharePoint item types
+export type SPItem = SharePointBaseItem & {
+  CustomField: string;
+  Status: 'Active' | 'Inactive';
+};
+```
+
+## SharePoint Specific
+- Always use HashRouter (never BrowserRouter)
+- Handle 5000 item view threshold
+- Use PnPjs, not raw REST API calls
+- Respect SharePoint permissions model
+- Handle throttling gracefully
+
+## Excel Online Integration
+- Use Microsoft Graph API (built into SPFx)
+- No external Graph setup required
+- Handle 1-2 minute sync delays
+- Use workbook ID from file properties
+
+## BCM System Architecture
+- Excel Online for relational data storage
+- SharePoint Lists only for simple data (<1000 items)
+- Zero-maintenance design philosophy
+- Business user data management focus
+
+## Code Style
+- NO comments unless explicitly requested
+- Concise, self-documenting code
+- Consistent naming conventions
+- Error handling for all async operations
+
+## File Organization
+```
+src/
+  components/     # React components
+  services/       # API services (Excel, SharePoint)
+  types/          # TypeScript type definitions
+  hooks/          # Custom React hooks
+  utils/          # Helper functions
+```
+
+## Performance
+- Implement virtualization for large lists
+- Use React.memo strategically
+- Lazy load components when appropriate
+- Cache data with React Query
+
+## Security
+- Never store secrets in code
+- Use SharePoint's built-in auth
+- Validate all user inputs
+- Sanitize data before display
+
+## Testing
+- Check for existing test setup before assuming
+- Look for test commands in package.json
+- Never assume test framework
+
+## Deployment
+```bash
+gulp bundle --ship
+gulp package-solution --ship
+# Upload .sppkg to App Catalog
+```
+
+## Common Mistakes to Avoid
+- Using interface instead of type
+- Using BrowserRouter instead of HashRouter
+- Ignoring SharePoint's 5000 item limit
+- Creating unnecessary complexity
+- Adding comments without being asked
+- Using SharePoint Lists for many-to-many relationships
